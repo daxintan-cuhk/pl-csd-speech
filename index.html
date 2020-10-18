@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--input: info_dict-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>
+    In this test, you are going to rate the similarity of output speech from speech synthesis system and groundtruth source speech.
+    You need to go through two parts. Each part has 10 samples to rate. You are suggested to take headphone for better quality of speech.<br>
+    <font color='red'>PLEASE READ CAREFULLY THE INSTRUCTION BEFORE YOUR EVALUATION!</font>
+</h3>
+<hr>
+<form action='/result' method='post' id='form'>
+    <h4>
+        Part 1:<br>
+        In this part, you are going to evaluate <font color='red'>10 samples</font>. Each sample has<font color='red'> 4 audios</font>.<br>
+        For each sample, you are first provided with <font color='red'>1 source audio</font>.<br>
+        Then you will be provided with<font color='red'> 3 output audios</font> from three system. <br>
+        You are required to rate the similarity of output audio and the source audio.<font color='red'> The similarity include both the
+        content and style.</font>
+        The content refers to the corresponding text (transcription) of the speech. The style refers to the acoustic
+        realization of the speech, e.g., pitch, loudness,
+        duration, pause and so on. You need to<font color='red'> give mark from 0 to 5, where 0 means 'completely
+        different in content and style', 5 means
+        'exactly the same in content and style'</font>.<br>
+        source audio</font>.
+    </h4>
+    {% for sample_index in range(len(info_dict.keys())) %}
+    <hr>
+    <p><strong>sample {{ sample_index }}:</strong></p>
+    <table border='1'>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <p>
+                    <strong>source speech</strong>:
+                    <audio controls='controls'>
+                        <source src={{ static_url(info_dict[sample_index]['reconstruction_source_file']) }} type='audio/wav'>
+                    </audio>
+                </p>
+            </td>
+        </tr>
+        {% for model_index in range(len(info_dict[sample_index]['output'])) %}
+        <tr>
+            <td>
+                <p>
+                    <strong>system {{ model_index }} speech:</strong>
+                    <audio controls='controls'>
+                        <source src={{ static_url(info_dict[sample_index]['output'][model_index]['reconstruction_speech']) }} type='audio/wav'>
+                    </audio>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <strong>content and style similarity with source speech</strong>: <input type='number'
+                                                                                             name={{ 'sample_'+str(sample_index)+'_model_'+str(model_index)+'_reconstruction_similarity' }}
+                                                                                                     max='5' min='0'
+                                                                                             required='required'/>
+                </p>
+            </td>
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+    <hr>
+    <h4>
+        Part 2:<br>
+        In this part, you are going to evaluate<font color='red'> 10 samples</font>. Each sample has <font color='red'>5 audios</font>. <br>
+        For each sample, you are first provided with<font color='red'> 2 source audio: content source audio and
+        style source audio</font>.
+        Then you will be provided with <font color='red'>3 output audios</font> from three system. <br>
+        1. the<font color='red'> similarity of content</font> of the<font color='red'> output speech</font> to the<font
+            color='red'> content source
+        speech</font>. The content refers to the corresponding text (transcription) of the speech.
+        You need to<font color='red'> give mark from 0 to 5, where 0 means 'completely different in content', 5 means
+        'exactly the same in
+        content'</font>.<br>
+        2. the<font color='red'> similarity of style</font> of the<font color='red'> output speech</font> to the<font
+            color='red'> style source
+        speech</font> respectivel. The style refers to the acoustic realization of the speech, e.g., pitch, loudness,
+        duration, pause and
+        so on. You need to<font color='red'> give mark from 0 to 5, where 0 means 'completely different in style', 5
+        means
+        'exactly the same in
+        style'</font>.<br>
+    </h4>
+    {% for sample_index in range(len(info_dict.keys())) %}
+    <hr>
+    <p><strong>sample {{ sample_index }}:</strong></p>
+    <table border='1'>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <p>
+                    <strong>content source speech</strong>:
+                    <audio controls='controls'>
+                        <source src={{ static_url(info_dict[sample_index]['content_source_file']) }} type='audio/wav'>
+                    </audio>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <strong>style source speech</strong>:
+                    <audio controls='controls'>
+                        <source src={{ static_url(info_dict[sample_index]['style_source_file']) }} type='audio/wav'>
+                    </audio>
+                </p>
+            </td>
+        </tr>
+        {% for model_index in range(len(info_dict[sample_index]['output'])) %}
+        <tr>
+            <td>
+                <p>
+                    system {{ model_index }} speech:
+                    <audio controls='controls'>
+                        <source src={{ static_url(info_dict[sample_index]['output'][model_index]['recombination_speech']) }} type='audio/wav'>
+                    </audio>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <strong>content similarity with content source speech</strong>: <input type='number'
+                                                                                           name={{ 'sample_'+str(sample_index)+'_model_'+str(model_index)+'_content_similarity' }}
+                                                                                                   max='5' min='0'
+                                                                                           required='required'/>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <strong>style similarity with style source speech</strong>: <input type='number'
+                                                                                       name={{ 'sample_'+str(sample_index)+'_model_'+str(model_index)+'_style_similarity' }}
+                                                                                               max='5' min='0'
+                                                                                       required='required'/>
+                </p>
+            </td>
+        </tr>
+        {% end %}
+    </table>
+    {% end %}
+    <hr>
+    <p> Your username: <input type='text' name='username' required='required'></p>
+    <p><font color='red'><strong>Please check carefully if you complete all the answer and input your user name! </strong></font></p>
+    <input type='submit' value='submit'>
+</form>
+</body>
+</html>
