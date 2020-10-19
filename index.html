@@ -3,20 +3,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Speech examples of 'Fine-grained style modelling and transfer in text-to-speech synthesis via content-style disentanglement'</title>
 </head>
 <body>
 <h3>
-    In this test, you are going to rate the similarity of output speech from speech synthesis system and groundtruth source speech.
-    You need to go through two parts. Each part has 10 samples to rate. You are suggested to take headphone for better quality of speech.<br>
-    <font color='red'>PLEASE READ CAREFULLY THE INSTRUCTION BEFORE YOUR EVALUATION!</font>
+    In this part, 10 samples are provided. Each sample comprises two groundtruth utterances and four synthesized utterances. Each synthesized utterance is generated with
+    a phoneme embedding sequence and a style embedding sequence, of which each embedding sequence corresponds to one of the groundtruth utterances, We name the synthesized 
+    utterance by their source of phoneme embedding sequence and style embedding sequence. For example, 'content 1 style 2 synthesized utterance' refers to the synthesized 
+    utterance that the phoneme embedding sequence correspond to the text of groundtruth utterance 1 and the style embedding sequence is derived from groundtruth utterance 2. 
+    Ideally, the synthesized utterance should has similar content to its content source and similar style to its style source.
+    
 </h3>
 <hr>
-<audio controls='controls'>
-      <source src='audios/audio_groundtruth_LJ002-0054.wav' type='audio/wav'>
-</audio>
-<audio controls='controls'>
-      <source src='audios/audio_groundtruth_LJ019-0192.wav' type='audio/wav'>
-</audio>
+    sample 1: 
+    groundtruth utterance 1:
+    <audio controls='controls'>
+          <source src='audios/recombination/LJ002-0054_LJ019-0192/converted_audio_groundtruth_LJ002-0054.wav ' type='audio/wav'>
+    </audio>
+    groundtruth utterance 2:
+    <audio controls='controls'>
+          <source src='audios/recombination/LJ002-0054_LJ019-0192/converted_audio_groundtruth_LJ019-0192.wav' type='audio/wav'>
+    </audio>
+    <br>
+    content 1 style 1 synthesized utterance:
+    <audio controls='controls'>
+          <source src='audios/recombination/LJ002-0054_LJ019-0192/converted_audio_outputs_content_LJ002-0054_style_LJ002-0054.wav' type='audio/wav'>
+    </audio>
+    content 2 style 2 synthesized utterance:
+    <audio controls='controls'>
+          <source src='audios/recombination/LJ002-0054_LJ019-0192/converted_audio_outputs_content_LJ019-0192_style_LJ019-0192.wav' type='audio/wav'>
+    </audio>
+    <br>
+    content 2 style 1 synthesized utterance:
+    <audio controls='controls'>
+          <source src='audios/recombination/LJ002-0054_LJ019-0192/converted_audio_outputs_content_LJ019-0192_style_LJ002-0054.wav' type='audio/wav'>
+    </audio>
+    content 1 style 2 synthesized utterance:
+    <audio controls='controls'>
+          <source src='audios/recombination/LJ002-0054_LJ019-0192/converted_audio_outputs_content_LJ002-0054_style_LJ019-0192.wav' type='audio/wav'>
+    </audio>
 </body>
 </html>
